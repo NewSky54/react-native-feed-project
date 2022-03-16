@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "react-native-feed-project",
+    "slug": "react-native-feed-project",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
