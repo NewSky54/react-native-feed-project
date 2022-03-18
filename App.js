@@ -1,21 +1,36 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect } from "react";
+import { ApolloProvider } from "@apollo/client";
+import makeApolloClient from "./apollo";
+import Home from "./src/home";
+import { Text } from "react-native";
+import AppLoading from "expo-app-loading";
+import {
+  useFonts,
+  Nunito_400Regular,
+  Nunito_600SemiBold,
+  Nunito_800ExtraBold,
+} from "@expo-google-fonts/nunito";
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+  let [fontsLoaded] = useFonts({
+    Nunito_400Regular,
+    Nunito_600SemiBold,
+    Nunito_800ExtraBold,
+  });
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  const client = makeApolloClient();
+
+  if (!client) {
+    return <Text>Loading...</Text>;
+  }
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  } else {
+    return (
+      <ApolloProvider client={client}>
+        <Home />
+      </ApolloProvider>
+    );
+  }
+}
